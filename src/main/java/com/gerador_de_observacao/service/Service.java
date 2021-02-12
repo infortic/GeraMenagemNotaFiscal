@@ -5,6 +5,8 @@ import java.math.RoundingMode;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.gerador_de_observacao.Constantes;
 import com.gerador_de_observacao.DTO.ComposicaoDTO;
 
@@ -13,6 +15,7 @@ import com.gerador_de_observacao.DTO.ComposicaoDTO;
  * @author Cleiton Silva
  */
 @org.springframework.stereotype.Service
+@Component
 public class Service {
 
 	String texto;
@@ -102,6 +105,11 @@ public class Service {
 		return " ";
 	}
 	
+	/**
+	  * método que calcula o total do item. 
+	  * @param composicao     	   objeto do tipo ComposicaoDTO.class
+	  * @return BigDecimal
+	  */
 	private BigDecimal calcularTotalItemBigDecinal(ComposicaoDTO composicao) {
 		if(!composicao.getValorUnitario().isBlank() && !composicao.getQuantidadeComposicao().isBlank()) {
 			BigDecimal valorUnitario = new BigDecimal(composicao.getValorUnitario().replace(",", "."));

@@ -101,4 +101,8 @@ public class ComposicaoBuilder{
 				tipoItem, descricaoItemComposicao, quantidadeComposicao, valorUnitario);
 	}
 	
+	public static final ComposicaoBuilder getInstace() {
+		return new ComposicaoBuilder();
+	}
+	
 }
