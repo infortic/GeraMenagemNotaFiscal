@@ -18,3 +18,22 @@ alterado, mas o seu comportamento deve ser mantido com funcionamento igual ao at
 Ao final da implementação, enviar as classes de produção e testes que atendem as necessidades acima.</br>
 Além das classes, detalhar no README.md os aspectos negativos do código atual e os motivos que</br>
 incentivaram as possíveis mudanças no código.</br>
+
+
+## Buildar e executar a aplicação
+Dentro do diretório root da aplicação executar os passos abaixo.</br>
+
+Para buildar a aplicação: mvn clean install #buildando o pacote da aplicação</br>
+
+a linha de código a cima criara uma pasta chamada target com a versão final da aplicação.</br>
+
+### Para executar a aplicação:</br>
+
+java -jar GeradorDeObservacao-0.0.1.jar </br>
+
+A partir deste ponto se tudo ocorrer corretamente a aplicação estará rodando e atendendo requisições através da porta cadastrada no</br> arquivo application.yml (se não foi alterado estará na porta 5001).</br></br></br>
+
+É possível utilizar o client do swagger através da url [http://localhost:5001/swagger-ui.html], possibilitando a verificação dos</br> endpoints, dos DTOs esperados, e até mesmo realizar testes de requisições.</br></br></br>
+
+### Executando Testes Automatizados
+mvn test #Dentro do pacote da aplicação para executar os testes automatizados
