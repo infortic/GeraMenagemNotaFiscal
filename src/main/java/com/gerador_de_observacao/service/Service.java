@@ -8,9 +8,6 @@ import java.util.List;
 import com.gerador_de_observacao.Constantes;
 import com.gerador_de_observacao.DTO.ComposicaoDTO;
 
-
-
-
 /**
  * Classe responsável por gerar mensagem de nota fiscal de composição.
  * @author Cleiton Silva
@@ -62,8 +59,15 @@ public class Service {
 				separador = Constantes.E;
 			mensagemBuilder.append(this.retornaMensagemComOuSemValorTotalNota(separador, composicao, mostrarValorNota));
 		}
-
-		return texto + mensagemBuilder;
+		
+		
+		if(mostrarValorNota) {
+			BigDecimal toalNota = this.calculaTotalNota(notasComposicao);
+			return texto + mensagemBuilder +". "+ "Total = "+toalNota;
+		}else {
+			return texto + mensagemBuilder;
+		}
+		
 	}
 	
 	/**
@@ -92,10 +96,33 @@ public class Service {
 		if(!composicao.getValorUnitario().isBlank() && !composicao.getQuantidadeComposicao().isBlank()) {
 			BigDecimal valorUnitario = new BigDecimal(composicao.getValorUnitario().replace(",", "."));
 			BigDecimal quantidade = new BigDecimal(composicao.getQuantidadeComposicao().replace(",", "."));
-			BigDecimal totalComposicao = valorUnitario.multiply(quantidade).setScale(2, RoundingMode.HALF_EVEN);;
+			BigDecimal totalComposicao = valorUnitario.multiply(quantidade).setScale(2, RoundingMode.HALF_EVEN);
 			return " cujo valor é " + totalComposicao;	
 		}
-		return "";
+		return " ";
 	}
-
+	
+	private BigDecimal calcularTotalItemBigDecinal(ComposicaoDTO composicao) {
+		if(!composicao.getValorUnitario().isBlank() && !composicao.getQuantidadeComposicao().isBlank()) {
+			BigDecimal valorUnitario = new BigDecimal(composicao.getValorUnitario().replace(",", "."));
+			BigDecimal quantidade = new BigDecimal(composicao.getQuantidadeComposicao().replace(",", "."));
+			BigDecimal totalComposicao = valorUnitario.multiply(quantidade).setScale(2, RoundingMode.HALF_EVEN);
+			return totalComposicao;	
+		}
+		return null;
+	}
+	
+	
+	private BigDecimal calculaTotalNota(List<ComposicaoDTO> notasComposicao){
+		BigDecimal total = new BigDecimal(0);
+		for(ComposicaoDTO composicao : notasComposicao) {
+			BigDecimal totalUnitario = this.calcularTotalItemBigDecinal(composicao);
+			if(totalUnitario != null) {
+				total = total.add(totalUnitario);
+			}
+			
+		}
+		return total;
+	}
+	
 }
